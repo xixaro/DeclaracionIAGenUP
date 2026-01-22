@@ -4,7 +4,8 @@ index.html
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente de Declaración IAGen</title>
+    <title>Asistente de Declaración IAGen - Universidad del Pacífico</title>
+    <meta name="description" content="Sistema interactivo para documentar el uso de Inteligencia Artificial Generativa en investigación académica">
     <style>
         * {
             margin: 0;
@@ -45,7 +46,6 @@ index.html
             opacity: 0.9;
         }
         
-        /* Progress Bar */
         .progress-container {
             background: #f5f5f5;
             padding: 20px 40px;
@@ -118,7 +118,6 @@ index.html
             font-weight: 600;
         }
         
-        /* Content Area */
         .content {
             padding: 40px;
         }
@@ -293,7 +292,6 @@ index.html
             cursor: not-allowed;
         }
         
-        /* Summary */
         .summary-card {
             background: #f8f9fa;
             padding: 20px;
@@ -330,7 +328,6 @@ index.html
             margin-bottom: 5px;
         }
         
-        /* Alert */
         .alert {
             padding: 15px;
             border-radius: 6px;
@@ -349,7 +346,6 @@ index.html
             border-left: 4px solid #ffc107;
         }
         
-        /* Documents Preview */
         .document-preview {
             background: white;
             padding: 40px;
@@ -381,7 +377,6 @@ index.html
             margin-bottom: 10px;
         }
         
-        /* Download Buttons */
         .download-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -420,20 +415,6 @@ index.html
             opacity: 0.9;
         }
         
-        @media print {
-            body {
-                background: white;
-            }
-            
-            .container {
-                box-shadow: none;
-            }
-            
-            .header, .progress-container, .buttons, .download-section {
-                display: none !important;
-            }
-        }
-        
         .note-box {
             background: #fff3cd;
             border-left: 4px solid #ffc107;
@@ -446,6 +427,13 @@ index.html
             display: block;
             margin-bottom: 8px;
             color: #856404;
+        }
+        
+        .note-box p {
+            color: #856404;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
         }
         
         .autor-card {
@@ -469,6 +457,20 @@ index.html
         
         .btn-remove-autor:hover {
             background: #c82333;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .header, .progress-container, .buttons, .download-section {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -1043,14 +1045,12 @@ index.html
                     return false;
                 }
                 
-                // Validar que el primer autor tenga todos los campos obligatorios
                 const primerAutor = autores[0];
                 if (!primerAutor.nombre || !primerAutor.apellido1 || !primerAutor.email || !primerAutor.afiliacion) {
                     alert('Por favor complete todos los campos obligatorios del primer autor (Nombre, Primer Apellido, Email y Afiliación)');
                     return false;
                 }
                 
-                // Validar formato de emails
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 for (let autor of autores) {
                     if (autor.email && !emailRegex.test(autor.email)) {
@@ -1059,7 +1059,6 @@ index.html
                     }
                 }
                 
-                // Validar que todos los autores agregados tengan campos completos
                 for (let i = 1; i < autores.length; i++) {
                     if (!autores[i].nombre || !autores[i].apellido1 || !autores[i].email || !autores[i].afiliacion) {
                         alert(`Por favor complete todos los campos obligatorios del Autor ${autores[i].numero} o elimínelo`);
@@ -1414,145 +1413,4 @@ index.html
     
     <div class="section">
         <div class="section-title">3. TÍTULO</div>
-        <p>${formData.titulo}</p>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">4. ÁREAS DE INTERVENCIÓN</div>
-        <ul>${formData.areas.map(a => '<li>' + a + '</li>').join('')}</ul>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">5. DESCRIPCIÓN</div>
-        <p>${formData.descripcion}</p>
-    </div>
-    
-    ${formData.comentarios ? `
-    <div class="section">
-        <div class="section-title">6. COMENTARIOS</div>
-        <p>${formData.comentarios}</p>
-    </div>
-    ` : ''}
-    
-    <div class="note">
-        <strong>DECLARACIÓN DE RESPONSABILIDAD:</strong>
-        <p>Los autores declaran haber revisado, validado y verificado todos los resultados generados por los LLM mencionados.</p>
-    </div>
-    
-    <div style="margin-top: 40px;">
-        <p>Fecha: ${today}</p>
-        ${firmasHTML}
-    </div>
-</body>
-</html>`;
-            
-            const blob = new Blob([html], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Declaracion_IAGen.html';
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            alert('Descargado. Abre el archivo HTML y usa Ctrl+P para guardar como PDF.');
-        }
-        
-        function downloadLetter() {
-            collectFormData();
-            
-            const today = new Date().toLocaleDateString('es-ES', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            const autoresNombres = formData.autores.map(a => a.nombreCompleto).join(' y ');
-            
-            let autoresCartaHTML = '';
-            formData.autores.forEach((autor) => {
-                autoresCartaHTML += `
-        <br><br>
-        <p>_________________________</p>
-        <p>${autor.nombreCompleto}</p>
-        <p>${autor.email}</p>
-        <p>${autor.afiliacion}</p>
-                `;
-            });
-            
-            let html = `<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Carta de Declaración</title>
-    <style>
-        body { font-family: 'Times New Roman', serif; padding: 60px; line-height: 1.8; }
-        p { text-align: justify; margin-bottom: 15px; }
-    </style>
-</head>
-<body>
-    <div style="text-align: right; margin-bottom: 30px;">${today}</div>
-    
-    <p>Estimado/a Editor/a,</p>
-    
-    <p>Por medio de la presente, ${formData.autores.length === 1 ? 'yo' : 'nosotros'}, ${autoresNombres}, 
-    autor${formData.autores.length > 1 ? 'es' : ''} del manuscrito titulado "<strong>${formData.titulo}</strong>", 
-    ${formData.autores.length === 1 ? 'declaro' : 'declaramos'} formalmente el uso de 
-    herramientas de Inteligencia Artificial Generativa (IAGen) durante el proceso de investigación y redacción.</p>
-    
-    <p>Específicamente, ${formData.autores.length === 1 ? 'he' : 'hemos'} utilizado: ${formData.llm1} (${formData.version1})${formData.llm2 ? ' y ' + formData.llm2 + ' (' + formData.version2 + ')' : ''}.</p>
-    
-    <p>${formData.descripcion}</p>
-    
-    <p>${formData.autores.length === 1 ? 'Declaro' : 'Declaramos'} que ${formData.autores.length === 1 ? 'he' : 'hemos'} 
-    revisado exhaustivamente todos los resultados generados mediante estas herramientas. 
-    ${formData.autores.length === 1 ? 'Asumo' : 'Asumimos'} total responsabilidad por la precisión y validez del contenido de nuestro manuscrito.</p>
-    
-    <p>${formData.autores.length === 1 ? 'Conservo' : 'Conservamos'} los historiales completos de las conversaciones, disponibles si la revista lo requiere.</p>
-    
-    <p>Atentamente,</p>
-    
-    <div style="margin-top: 50px;">
-        ${autoresCartaHTML}
-    </div>
-</body>
-</html>`;
-            
-            const blob = new Blob([html], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Carta_Declaracion_IAGen.html';
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            alert('Descargado. Abre el archivo HTML y usa Ctrl+P para guardar como PDF.');
-        }
-        
-        function nextStep() {
-            if (!validateStep()) return;
-            
-            if (currentStep < totalSteps) {
-                currentStep++;
-                updateProgress();
-                
-                if (currentStep === 5) {
-                    showSummary();
-                }
-                
-                if (currentStep === 6) {
-                    generateDocuments();
-                }
-            }
-        }
-        
-        function prevStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateProgress();
-            }
-        }
-        
-        updateProgress();
-    </script>
-</body>
-</html>
+        <p>${formData.titulo}</p
