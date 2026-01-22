@@ -114,7 +114,7 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 ## 📧 Contacto
 
-**Universidad del Pacífico**
+**Universidad Panamericana**
 - Repositorio: [github.com/xixaro/DeclaracionIAGenUP](https://github.com/xixaro/DeclaracionIAGenUP)
 - Issues: [github.com/xixaro/DeclaracionIAGenUP/issues](https://github.com/xixaro/DeclaracionIAGenUP/issues)
 
