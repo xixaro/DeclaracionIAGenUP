@@ -4,7 +4,7 @@ index.html
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente de Declaración IAGen - Universidad del Pacífico</title>
+    <title>Asistente de Declaración IAGen - Universidad Panamericana</title>
     <meta name="description" content="Sistema interactivo para documentar el uso de Inteligencia Artificial Generativa en investigación académica">
     <style>
         * {
