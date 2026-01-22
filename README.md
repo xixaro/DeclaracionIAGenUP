@@ -1,4 +1,4 @@
-# 🤖 Declaración de Uso de IAGen - Universidad del Pacífico
+# 🤖 Declaración de Uso de IAGen - Universidad Panamericana
 
 Sistema interactivo para documentar el uso de Inteligencia Artificial Generativa en investigación académica.
 
